@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Project, Issue
+from .models import Project
 from contributors.models import Contributor
 from contributors.serializers import ContributorSerializer
 
