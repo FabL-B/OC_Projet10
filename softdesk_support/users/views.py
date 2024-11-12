@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
  
-from users.models import CustomUser
-from users.serializers import CustomUserSerializer
+from .models import CustomUser
+from .serializers import CustomUserSerializer
  
 class CustomUserViewset(ModelViewSet):
  
