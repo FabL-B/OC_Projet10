@@ -1,25 +1,121 @@
 from rest_framework.permissions import BasePermission
 
-class IsAuthor(BasePermission):
-    """Permission that grant access if user is author of the ressource."""
+from projects.models import Project
 
-    def has_object_permission(self, request, view, obj):
+
+class GlobalPermission(BasePermission):
+    """Base permission class for common helper methods."""
+
+    def is_author(self, request, obj=None):
+        """Check if the user is the author of the object."""
+        return obj and hasattr(obj, 'author') and obj.author == request.user
+
+    def is_contributor(self, request, project):
+        """Check if the user is a contributor to the project."""
+        return project.contributors.filter(user=request.user).exists()
+
+
+class ProjectPermission(GlobalPermission):
+    """Permissions specific to projects."""
+
+    def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False
 
-        if request.method in ['PUT', 'PATCH', 'DELETE']:
-            return obj.author == request.user
-        
-        return True
+        if view.action == 'list':
+            return True
+        elif view.action == 'create':
+            return True
+        elif view.action in ['retrieve', 'update', 'partial_update', 'destroy']:
+            return True
 
+        return False
 
-class IsContributor(BasePermission):
-    """Permission that grant access to contributors."""
     def has_object_permission(self, request, view, obj):
-        return request.user.is_authenticated and obj.contributors.filter(user=request.user).exists()
+        if view.action == 'retrieve':
+            return self.is_contributor(request, obj) or self.is_author(request, obj)
+        elif view.action in ['update', 'partial_update', 'destroy']:
+            return self.is_author(request, obj)
+
+        return False
 
 
-class IsAuthenticated(BasePermission):
-    """Permission that grant access if user is user is authenticated."""
+class ContributorPermission(GlobalPermission):
+    """Permissions specific to contributors."""
+
     def has_permission(self, request, view):
-        return request.user.is_authenticated
+        if not request.user.is_authenticated:
+            return False
+
+        if view.action == 'list':
+            return True
+        elif view.action == 'create':
+            project_id = view.kwargs.get('project_pk')
+            project = Project.objects.get(id=project_id) if project_id else None
+            return project and project.author == request.user
+        elif view.action == 'destroy':
+            return True
+
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        project = obj.project
+        
+        if view.action == 'destroy':
+            return self.is_author(request, project)
+
+        return False
+
+
+class CommentPermission(GlobalPermission):
+    """Permissions specific to comments."""
+
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+
+        if view.action == 'list':
+            return True
+        elif view.action == 'create':
+            return True
+        elif view.action in ['retrieve', 'update', 'partial_update', 'destroy']:
+            return True
+
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        project = obj.issue.project
+
+        if view.action == 'retrieve':
+            return self.is_contributor(request, project)
+        elif view.action in ['update', 'partial_update', 'destroy']:
+            return self.is_author(request, obj)
+
+        return False
+
+
+class IssuePermission(GlobalPermission):
+    """Permissions specific to issues."""
+
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+
+        if view.action == 'list':
+            return True
+        elif view.action == 'create':
+            return True
+        elif view.action in ['retrieve', 'update', 'partial_update', 'destroy']:
+            return True
+
+        return False
+
+    def has_object_permission(self, request, view, obj):
+        project = obj.project
+
+        if view.action == 'retrieve':
+            return self.is_contributor(request, project)
+        elif view.action in ['update', 'partial_update', 'destroy']:
+            return self.is_author(request, obj)
+
+        return False
