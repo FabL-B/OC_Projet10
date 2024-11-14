@@ -5,8 +5,8 @@ from .views import ContributorViewSet
  
 
 router = routers.SimpleRouter()
-router.register(r'contributors', ContributorViewSet, basename='contributors')
+router.register(r'', ContributorViewSet, basename='contributors')
  
 urlpatterns = [
-    path('', include(router.urls))
+    path('projects/<int:project_pk>/contributors/', include(router.urls))
 ]
