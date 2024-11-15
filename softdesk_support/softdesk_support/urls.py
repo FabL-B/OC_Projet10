@@ -24,7 +24,7 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('', include('projects.urls')),
     path('', include('contributors.urls')),
-    path('issues/', include('issues.urls')),
+    path('', include('issues.urls')),
     path('comments/', include('comments.urls')),
 
     path('api-auth/', include('rest_framework.urls')),

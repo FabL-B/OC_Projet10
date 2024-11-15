@@ -15,6 +15,12 @@ class IssueViewSet(viewsets.ModelViewSet):
         if project_id:
             return Issue.objects.filter(project__id=project_id)
         return Issue.objects.none()
+    
+    def get_serializer_context(self):
+        """Add project to serializer context."""
+        context = super().get_serializer_context()
+        context['project'] = Project.objects.get(id=self.kwargs['project_pk'])
+        return context
 
     def perform_create(self, serializer):
         """Create an issue."""
