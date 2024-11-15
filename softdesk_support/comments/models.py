@@ -1,10 +1,16 @@
+import uuid
 from django.db import models
+
 from users.models import CustomUser
 from issues.models import Issue
 
 
-class Comments(models.Model):
-    
+class Comment(models.Model):
+    """A class that defines a comment."""
+    id = models.UUIDField(primary_key=True,
+                          default=uuid.uuid4,
+                          editable=False
+                          )
     author = models.ForeignKey(CustomUser,
                                on_delete=models.CASCADE,
                                related_name="comments"
