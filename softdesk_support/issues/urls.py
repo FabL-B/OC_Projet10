@@ -6,8 +6,8 @@ from .views import IssueViewSet
  
 
 router = routers.SimpleRouter()
-router.register(r'', IssueViewSet, basename='issues')
+router.register(r'issues', IssueViewSet, basename='issues')
  
 urlpatterns = [
-    path('projects/<int:project_pk>/issues/', include(router.urls))
+    path('projects/<int:project_pk>/', include(router.urls))
 ]
