@@ -22,13 +22,13 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('users/', include('users.urls')),
+    
     path('', include('projects.urls')),
     path('', include('contributors.urls')),
     path('', include('issues.urls')),
-    path('comments/', include('comments.urls')),
+    path('', include('comments.urls')),
 
     path('api-auth/', include('rest_framework.urls')),
-
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
