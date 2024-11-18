@@ -7,12 +7,17 @@ from softdesk_support.permissions import ContributorPermission
 
 
 class ContributorViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing contributors.
 
+    Provides functionality to list, retrieve, add, update, and delete
+    contributors for a specific project.
+    """
     serializer_class = ContributorSerializer
     permission_classes = [ContributorPermission]
 
     def get_queryset(self):
-        """Get contributors from a specified project."""
+        """Return the queryset of contributors for a specific project."""
         project_id = self.kwargs.get('project_pk')
         if project_id:
             return Contributor.objects.filter(project__id=project_id)

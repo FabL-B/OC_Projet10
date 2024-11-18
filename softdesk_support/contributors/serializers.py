@@ -4,6 +4,12 @@ from users.models import CustomUser
 
 
 class ContributorSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Contributor model.
+
+    Serializes the relationship between a user and a project,
+    including the contributor's role.
+    """
     user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     project = serializers.StringRelatedField()
 

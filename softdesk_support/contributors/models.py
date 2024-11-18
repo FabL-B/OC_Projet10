@@ -4,7 +4,14 @@ from projects.models import Project
 
 
 class Contributor(models.Model):
-    """Class that defines a contributor."""
+    """
+    Model that defines a contributor to a project.
+
+    Attributes:
+        user (ForeignKey): The user who contributes to the project.
+        project (ForeignKey): The project the user is contributing to.
+        role (CharField): The role of the contributor within the project.
+    """
 
     ROLE = [
         ("Owner", "Owner"),
@@ -22,4 +29,5 @@ class Contributor(models.Model):
     role = models.CharField(max_length=20, choices=ROLE, default="Contributor")
 
     def __str__(self):
+        """Return a string representation of the contributor."""
         return f"{self.user.username} - {self.project.name}"
