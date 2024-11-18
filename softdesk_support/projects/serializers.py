@@ -10,7 +10,13 @@ class ProjectListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'name', 'description', 'type', 'created_time']
+        fields = [
+            'id',
+            'name',
+            'description',
+            'type',
+            'created_time'
+        ]
         read_only_fields = ['created_time']
 
 
@@ -21,7 +27,15 @@ class ProjectDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ['id', 'author', 'name', 'description', 'type', 'created_time', 'contributors']
+        fields = [
+            'id',
+            'author',
+            'name',
+            'description',
+            'type',
+            'created_time',
+            'contributors'
+        ]
         read_only_fields = ['author', 'created_time']
 
     def get_contributors(self, obj):

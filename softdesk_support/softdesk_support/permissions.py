@@ -60,7 +60,7 @@ class ContributorPermission(GlobalPermission):
 
     def has_object_permission(self, request, view, obj):
         project = obj.project
-        
+
         if view.action == 'destroy':
             return self.is_author(request, project)
 

@@ -4,6 +4,7 @@ from rest_framework.reverse import reverse
 from .models import Comment
 from issues.models import Issue
 
+
 class CommentSerializer(serializers.ModelSerializer):
     """Serializer for Comment model."""
     issue_url = serializers.SerializerMethodField()

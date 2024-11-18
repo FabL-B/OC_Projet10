@@ -3,8 +3,8 @@ from rest_framework import viewsets
 from .models import Comment
 from .serializers import CommentSerializer
 from issues.models import Issue
-from projects.models import Project
 from softdesk_support.permissions import CommentPermission
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer

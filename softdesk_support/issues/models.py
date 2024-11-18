@@ -7,7 +7,7 @@ from contributors.models import Contributor
 
 class Issue(models.Model):
     """Class that defines an issue."""
-    
+
     PRIORITIES = [
         ("Low", "Low"),
         ("Medium", "Medium"),
@@ -25,9 +25,9 @@ class Issue(models.Model):
     ]
 
     author = models.ForeignKey(CustomUser,
-                            on_delete=models.CASCADE,
-                            related_name="issue_author"
-                            )
+                               on_delete=models.CASCADE,
+                               related_name="issue_author"
+                               )
     project = models.ForeignKey(Project,
                                 on_delete=models.CASCADE,
                                 related_name="issues"
@@ -35,7 +35,7 @@ class Issue(models.Model):
     title = models.CharField(max_length=255,)
     description = models.TextField(max_length=2000)
     assigned_to = models.ForeignKey(Contributor,
-                                    on_delete=models.CASCADE, 
+                                    on_delete=models.CASCADE,
                                     related_name="assigned_issues"
                                     )
     priority = models.CharField(max_length=20, choices=PRIORITIES, default="Low")

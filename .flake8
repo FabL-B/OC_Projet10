@@ -1,0 +1,9 @@
+[flake8]
+max-line-length = 88
+format = pylint
+output-file = flake8_report.txt
+exclude = 
+    .git,
+    __pycache__,
+    env,
+    migrations

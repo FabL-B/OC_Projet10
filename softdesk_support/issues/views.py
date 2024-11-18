@@ -5,17 +5,18 @@ from .serializers import IssueSerializer
 from projects.models import Project
 from softdesk_support.permissions import IssuePermission
 
+
 class IssueViewSet(viewsets.ModelViewSet):
     serializer_class = IssueSerializer
     permission_classes = [IssuePermission]
-    
+
     def get_queryset(self):
         """Get issues from a project."""
         project_id = self.kwargs.get('project_pk')
         if project_id:
             return Issue.objects.filter(project__id=project_id)
         return Issue.objects.none()
-    
+
     def get_serializer_context(self):
         """Add project to serializer context."""
         context = super().get_serializer_context()
