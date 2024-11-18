@@ -3,7 +3,16 @@ from users.models import CustomUser
 
 
 class Project(models.Model):
-    """Class that defines a projet."""
+    """
+    Model that defines a project.
+
+    Attributes:
+        author (ForeignKey): The user who created the project.
+        type (CharField): The type of the project.
+        created_time (DateTimeField): The timestamp when the project was created.
+        name (CharField): The name of the project.
+        description (TextField): A detailed description of the project.
+    """
 
     PROJECT_TYPES = [
         ("Backend", "Backend"),
@@ -22,4 +31,5 @@ class Project(models.Model):
     description = models.TextField()
 
     def __str__(self):
+        """Return the name of the project."""
         return self.name
