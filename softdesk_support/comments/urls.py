@@ -8,5 +8,8 @@ router = routers.SimpleRouter()
 router.register(r'comments', CommentViewSet, basename='comments')
 
 urlpatterns = [
-    path('projects/<int:project_pk>/issues/<int:issue_pk>/', include(router.urls))
+    path(
+        'projects/<int:project_pk>/issues/<int:issue_pk>/',
+        include(router.urls)
+    )
 ]

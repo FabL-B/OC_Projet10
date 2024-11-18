@@ -6,15 +6,34 @@ from issues.models import Issue
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    """Serializer for Comment model."""
+    """
+    Serializer for the Comment model.
+
+    Adds an extra field 'issue_url' that provides the URL of the
+    related issue.
+    """
     issue_url = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'issue', 'issue_url', 'description', 'created_time']
-        read_only_fields = ['id', 'author', 'issue', 'issue_url', 'created_time']
+        fields = [
+            'id',
+            'author',
+            'issue',
+            'issue_url',
+            'description',
+            'created_time'
+        ]
+        read_only_fields = [
+            'id',
+            'author', 
+            'issue', 
+            'issue_url', 
+            'created_time'
+        ]
 
     def get_issue_url(self, obj):
+        """Get the URL of the issue related to this comment."""
         request = self.context.get('request')
         if obj.issue:
             return reverse(
@@ -28,6 +47,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return None
 
     def validate_issue(self, value):
+        """Validate that the issue belongs to the current project."""
         project_pk = self.context['view'].kwargs.get('project_pk')
         if not Issue.objects.filter(project_id=project_pk, id=value.id).exists():
             raise serializers.ValidationError()

@@ -7,18 +7,24 @@ from softdesk_support.permissions import CommentPermission
 
 
 class CommentViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing comments.
+
+    Provides functionality to list, retrieve, create, update, and delete
+    comments for a specific issue.
+    """
     serializer_class = CommentSerializer
     permission_classes = [CommentPermission]
 
     def get_queryset(self):
-        """Get comments an issue."""
+        """Return the queryset of comments for a specific issue."""
         issue_id = self.kwargs.get('issue_pk')
         if issue_id:
             return Comment.objects.filter(issue__id=issue_id)
         return Comment.objects.none()
 
     def get_serializer_context(self):
-        """Add issue to serializer context."""
+        """Add the issue instance to the serializer context."""
         context = super().get_serializer_context()
         issue_id = self.kwargs.get('issue_pk')
         if issue_id:
@@ -27,6 +33,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         return context
 
     def perform_create(self, serializer):
-        """Create a comment."""
+        """Create a new comment for a specific issue."""
         issue = Issue.objects.get(id=self.kwargs['issue_pk'])
         serializer.save(author=self.request.user, issue=issue)
