@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Issue
 from .serializers import IssueSerializer
@@ -14,7 +15,7 @@ class IssueViewSet(viewsets.ModelViewSet):
     issues for a specific project.
     """
     serializer_class = IssueSerializer
-    permission_classes = [IssuePermission]
+    permission_classes = [IsAuthenticated, IssuePermission]
 
     def get_queryset(self):
         """Return the queryset of issues for a specific project."""

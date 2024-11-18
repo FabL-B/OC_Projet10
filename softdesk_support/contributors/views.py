@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Contributor
 from .serializers import ContributorSerializer
@@ -14,7 +15,7 @@ class ContributorViewSet(viewsets.ModelViewSet):
     contributors for a specific project.
     """
     serializer_class = ContributorSerializer
-    permission_classes = [ContributorPermission]
+    permission_classes = [IsAuthenticated, ContributorPermission]
 
     def get_queryset(self):
         """Return the queryset of contributors for a specific project."""

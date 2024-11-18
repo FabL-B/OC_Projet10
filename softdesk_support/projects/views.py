@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
+from datetime import date
 
 from softdesk_support.permissions import ProjectPermission
 from .models import Project
@@ -10,7 +12,7 @@ class ProjectListViewSet(viewsets.ModelViewSet):
     """Handle listing of all projects."""
     queryset = Project.objects.all()
     serializer_class = ProjectListSerializer
-    permission_classes = [ProjectPermission]
+    permission_classes = [IsAuthenticated, ProjectPermission]
 
     def perform_create(self, serializer):
         project = serializer.save(author=self.request.user)
@@ -26,4 +28,4 @@ class ProjectDetailViewSet(viewsets.ModelViewSet):
     """Handle CRUD on a specified project"""
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializer
-    permission_classes = [ProjectPermission]
+    permission_classes = [IsAuthenticated, ProjectPermission]

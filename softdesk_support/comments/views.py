@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Comment
 from .serializers import CommentSerializer
@@ -14,7 +15,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     comments for a specific issue.
     """
     serializer_class = CommentSerializer
-    permission_classes = [CommentPermission]
+    permission_classes = [IsAuthenticated, CommentPermission]
 
     def get_queryset(self):
         """Return the queryset of comments for a specific issue."""
