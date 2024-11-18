@@ -4,6 +4,9 @@ from contributors.models import Contributor
 
 
 class IssueSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Issue model.
+    """
     class Meta:
         model = Issue
         fields = [
@@ -21,7 +24,10 @@ class IssueSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_time', 'author', 'project']
 
     def validate_assigned_to(self, value):
+        """Validate that the assigned contributor is part of the project."""
         project = self.context['view'].kwargs.get('project_pk')
         if not Contributor.objects.filter(project_id=project, id=value.id).exists():
-            raise serializers.ValidationError()
+            raise serializers.ValidationError(
+                "The assigned contributor does not belong to the project."
+            )
         return value
