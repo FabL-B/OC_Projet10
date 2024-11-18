@@ -19,9 +19,6 @@ class ProjectPermission(GlobalPermission):
     """Permissions specific to projects."""
 
     def has_permission(self, request, view):
-        if not request.user.is_authenticated:
-            return False
-
         if view.action == 'list':
             return True
         elif view.action == 'create':
@@ -44,9 +41,6 @@ class ContributorPermission(GlobalPermission):
     """Permissions specific to contributors."""
 
     def has_permission(self, request, view):
-        if not request.user.is_authenticated:
-            return False
-
         if view.action == 'list':
             return True
         elif view.action == 'create':
@@ -71,9 +65,6 @@ class CommentPermission(GlobalPermission):
     """Permissions specific to comments."""
 
     def has_permission(self, request, view):
-        if not request.user.is_authenticated:
-            return False
-
         if view.action == 'list':
             return True
         elif view.action == 'create':
@@ -98,8 +89,6 @@ class IssuePermission(GlobalPermission):
     """Permissions specific to issues."""
 
     def has_permission(self, request, view):
-        if not request.user.is_authenticated:
-            return False
 
         if view.action == 'list':
             return True
