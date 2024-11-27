@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Issue
-from .serializers import IssueSerializer
+from .serializers import IssueSerializer, IssueListSerializer
 from projects.models import Project
 from softdesk_support.permissions import IssuePermission
 
@@ -14,7 +14,6 @@ class IssueViewSet(viewsets.ModelViewSet):
     Provides functionality to list, retrieve, create, update, and delete
     issues for a specific project.
     """
-    serializer_class = IssueSerializer
     permission_classes = [IsAuthenticated, IssuePermission]
 
     def get_queryset(self):
@@ -29,6 +28,14 @@ class IssueViewSet(viewsets.ModelViewSet):
         context = super().get_serializer_context()
         context['project'] = Project.objects.get(id=self.kwargs['project_pk'])
         return context
+
+    def get_serializer_class(self):
+        """Choose serializer based on action."""
+        if self.action == 'list':
+            return IssueListSerializer
+        elif self.action == 'retrieve':
+            return IssueSerializer
+        return IssueSerializer
 
     def perform_create(self, serializer):
         """Create a new issue for a specific project."""

@@ -7,6 +7,7 @@ class IssueSerializer(serializers.ModelSerializer):
     """
     Serializer for the Issue model.
     """
+    author = serializers.StringRelatedField()
     class Meta:
         model = Issue
         fields = [
@@ -31,3 +32,13 @@ class IssueSerializer(serializers.ModelSerializer):
                 "The assigned contributor does not belong to the project."
             )
         return value
+
+class IssueListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for listing issues.
+    """
+    author = serializers.StringRelatedField()
+    class Meta:
+        model = Issue
+        fields = ['id', 'author', 'project', 'assigned_to', 'title']
+        read_only_fields = fields
