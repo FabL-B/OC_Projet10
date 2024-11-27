@@ -11,8 +11,15 @@ from .serializers import ProjectListSerializer, ProjectDetailSerializer
 class ProjectListViewSet(viewsets.ModelViewSet):
     """Handle listing of all projects."""
     queryset = Project.objects.all()
-    serializer_class = ProjectListSerializer
     permission_classes = [IsAuthenticated, ProjectPermission]
+
+    def get_serializer_class(self):
+        """Choose serializer based on action."""
+        if self.action == 'list':
+            return ProjectListSerializer
+        elif self.action == 'retrieve':
+            return ProjectDetailSerializer
+        return ProjectDetailSerializer
 
     def perform_create(self, serializer):
         project = serializer.save(author=self.request.user)
@@ -22,10 +29,3 @@ class ProjectListViewSet(viewsets.ModelViewSet):
                 project=project,
                 role="Owner"
             )
-
-
-class ProjectDetailViewSet(viewsets.ModelViewSet):
-    """Handle CRUD on a specified project"""
-    queryset = Project.objects.all()
-    serializer_class = ProjectDetailSerializer
-    permission_classes = [IsAuthenticated, ProjectPermission]
