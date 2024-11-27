@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from .models import Comment
-from .serializers import CommentSerializer
+from .serializers import CommentSerializer, CommentListSerializer
 from issues.models import Issue
 from softdesk_support.permissions import CommentPermission
 
@@ -14,7 +14,6 @@ class CommentViewSet(viewsets.ModelViewSet):
     Provides functionality to list, retrieve, create, update, and delete
     comments for a specific issue.
     """
-    serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated, CommentPermission]
 
     def get_queryset(self):
@@ -32,6 +31,14 @@ class CommentViewSet(viewsets.ModelViewSet):
             issue = Issue.objects.get(id=issue_id)
             context['issue'] = issue
         return context
+
+    def get_serializer_class(self):
+        """Choose serializer based on action."""
+        if self.action == 'list':
+            return CommentListSerializer
+        elif self.action == 'retrieve':
+            return CommentSerializer
+        return CommentSerializer
 
     def perform_create(self, serializer):
         """Create a new comment for a specific issue."""

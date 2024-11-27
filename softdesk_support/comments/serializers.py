@@ -12,6 +12,7 @@ class CommentSerializer(serializers.ModelSerializer):
     Adds an extra field 'issue_url' that provides the URL of the
     related issue.
     """
+    author = serializers.StringRelatedField()
     issue_url = serializers.SerializerMethodField()
 
     class Meta:
@@ -52,3 +53,13 @@ class CommentSerializer(serializers.ModelSerializer):
         if not Issue.objects.filter(project_id=project_pk, id=value.id).exists():
             raise serializers.ValidationError()
         return value
+
+class CommentListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for listing comments.
+    """
+    author = serializers.StringRelatedField()
+    class Meta:
+        model = Issue
+        fields = ['id', 'author', 'issue', 'title']
+        read_only_fields = fields

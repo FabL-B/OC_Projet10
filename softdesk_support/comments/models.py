@@ -16,7 +16,7 @@ class Comment(models.Model):
         description (TextField): The content of the comment
         created_time (DateTimeField): The timestamp when the comment was created.
     """
-    
+
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
                           editable=False
