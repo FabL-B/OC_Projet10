@@ -24,29 +24,29 @@ SoftDesk is a Django application for managing projects, users, and tickets assoc
 1. **Clone the repository**:
     ```bash
     git clone https://github.com/FabL-B/OC_Projet10
-    cd softdesk
+    cd OC_Projet10
     ```
 
-2. **Create and activate a virtual environment**:
+2. **Create a virtual environment and install dependencies**:
     ```bash
-    python -m venv env
-    source env/bin/activate  # Linux/Mac
-    env\Scripts\activate  # Windows
+    pip install pipenv
+    pipenv install --dev
     ```
 
-3. **Install dependencies**:
+3. **Activate a virtual environment**:
     ```bash
-    pip install -r requirements.txt
+    pipenv shell
     ```
 
 4. **Apply migrations**:
     ```bash
+    cd softdesk_support
     python manage.py migrate
     ```
 
 5. **Load test data**:
     ```bash
-    python manage.py loaddata fixtures/users.json
+    python manage.py loaddata fixtures/users_data_test.json
     ```
 
 6. **Superuser credentials**:
