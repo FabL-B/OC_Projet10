@@ -8,7 +8,9 @@ from .serializers import ProjectListSerializer, ProjectDetailSerializer
 
 
 class ProjectListViewSet(viewsets.ModelViewSet):
-    """Handle listing of all projects."""
+    """
+    ViewSet for managing projects.
+    """
     queryset = Project.objects.all()
     permission_classes = [IsAuthenticated, ProjectPermission]
 
@@ -21,6 +23,7 @@ class ProjectListViewSet(viewsets.ModelViewSet):
         return ProjectDetailSerializer
 
     def perform_create(self, serializer):
+        """Create a new project."""
         project = serializer.save(author=self.request.user)
 
         Contributor.objects.create(

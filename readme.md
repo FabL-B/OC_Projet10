@@ -2,7 +2,7 @@
 
 ## Description
 
-SoftDesk is a Django application for managing projects, users, and tickets associated with those projects. Users can collaborate on projects, create tickets to report issues or request features, and track their progress.
+SoftDesk is a Django application for managing projects, users, and issues associated with those projects. Users can collaborate on projects, create issues to report problems or request features, and track their progress.
 
 ## Features
 
@@ -13,11 +13,11 @@ SoftDesk is a Django application for managing projects, users, and tickets assoc
 ### Logged-in user
 - Create a new project
 - Add contributors to a project
-- Create tickets linked to a project
-- Update or delete tickets
+- Create issues linked to a project
+- Update or delete issues
 - Manage contributors for a project
-- Create comments for a ticket
-- View accessible projects and their tickets
+- Create comments for an issue
+- View accessible projects and their issues
 
 ## Project Installation
 
@@ -44,7 +44,7 @@ SoftDesk is a Django application for managing projects, users, and tickets assoc
     python manage.py migrate
     ```
 
-5. **Load test data**:
+5. **Load test data (optional)**:
     ```bash
     python manage.py loaddata fixtures/users_data_test.json
     ```
