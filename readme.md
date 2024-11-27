@@ -46,16 +46,16 @@ SoftDesk is a Django application for managing projects, users, and tickets assoc
 
 5. **Load test data**:
     ```bash
-    ## Faire des fixtures
+    python manage.py loaddata fixtures/users.json
     ```
 
 6. **Superuser credentials**:
    - **Username**: `admin`
-   - **Password**: `admin`
+   - **Password**: `mdpadmin`
 
 7. **Test users**:
-   - **Usernames**: `user1`, `user2`, etc.
-   - **Password**: `testpassword`
+   - **Usernames**: `user1`, `user2`
+   - **Password**: `mdpusertest`
 
 8. **Start the development server**:
     ```bash
@@ -104,14 +104,3 @@ SoftDesk is a Django application for managing projects, users, and tickets assoc
 - `GET /projects/{project_id}/issues/{issue_id}/comments/{comment_id}/` : Retrieve details of a specific comment
 - `PUT /projects/{project_id}/issues/{issue_id}/comments/{comment_id}/` : Update a comment
 - `DELETE /projects/{project_id}/issues/{issue_id}/comments/{comment_id}/` : Delete a comment
-
-## Tests
-
-1. **Run unit tests**:
-    ```bash
-    python manage.py test
-    ```
-
-## Postman 
-
-
