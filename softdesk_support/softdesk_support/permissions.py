@@ -15,14 +15,16 @@ class GlobalPermission(BasePermission):
     def is_author(self, request, obj=None):
         """Check if the user is the author of the object."""
         return obj and hasattr(obj, 'author') and obj.author == request.user
-    
+
     def is_contributor(self, request, view):
-        """Check if the user is a contributor for the project in the request context."""
+        """Check if the user is a contributor for the project."""
         project_id = view.kwargs.get('project_pk')
         if not project_id:
             return False
-        return Contributor.objects.filter(project_id=project_id, user=request.user).exists()
-
+        return Contributor.objects.filter(
+            project_id=project_id,
+            user=request.user
+        ).exists()
 
 
 class ProjectPermission(GlobalPermission):
@@ -69,11 +71,11 @@ class CommentPermission(GlobalPermission):
     """Permissions specific to comments."""
 
     def has_permission(self, request, view):
-        if view.action in ['list', 
-                           'create', 
-                           'retrieve', 
-                           'update', 
-                           'partial_update', 
+        if view.action in ['list',
+                           'create',
+                           'retrieve',
+                           'update',
+                           'partial_update',
                            'destroy'
                            ]:
             return self.is_contributor(request, view)
@@ -93,11 +95,11 @@ class IssuePermission(GlobalPermission):
     """Permissions specific to issues."""
 
     def has_permission(self, request, view):
-        if view.action in ['list', 
-                           'create', 
-                           'retrieve', 
-                           'update', 
-                           'partial_update', 
+        if view.action in ['list',
+                           'create',
+                           'retrieve',
+                           'update',
+                           'partial_update',
                            'destroy'
                            ]:
             return self.is_contributor(request, view)

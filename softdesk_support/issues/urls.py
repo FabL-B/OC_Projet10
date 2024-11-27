@@ -11,6 +11,6 @@ router.register(r'issues', IssueViewSet, basename='issues')
 urlpatterns = [
     path(
         'projects/<int:project_pk>/',
-         include(router.urls)
+        include(router.urls)
     )
 ]

@@ -38,7 +38,7 @@ class CustomUser(AbstractUser):
                 raise ValidationError(
                     f"You must be at least {MINIMUM_AGE} years old to register."
                 )
-        
+
     def __str__(self):
         """Return the string representation of the user."""
         return self.username

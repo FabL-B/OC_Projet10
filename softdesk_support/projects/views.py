@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from datetime import date
 
 from softdesk_support.permissions import ProjectPermission
 from .models import Project

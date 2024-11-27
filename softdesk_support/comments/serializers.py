@@ -27,9 +27,9 @@ class CommentSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             'id',
-            'author', 
-            'issue', 
-            'issue_url', 
+            'author',
+            'issue',
+            'issue_url',
             'created_time'
         ]
 
@@ -54,11 +54,13 @@ class CommentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError()
         return value
 
+
 class CommentListSerializer(serializers.ModelSerializer):
     """
     Serializer for listing comments.
     """
     author = serializers.StringRelatedField()
+
     class Meta:
         model = Issue
         fields = ['id', 'author', 'issue', 'title']
