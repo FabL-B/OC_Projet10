@@ -20,7 +20,7 @@ class GlobalPermission(BasePermission):
         """Check if the user is a contributor for the project."""
         project_id = view.kwargs.get('project_pk')
         if not project_id:
-            return False
+            project_id = view.kwargs.get('pk')
         return Contributor.objects.filter(
             project_id=project_id,
             user=request.user
